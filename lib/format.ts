@@ -12,8 +12,29 @@ const PCT1 = new Intl.NumberFormat("pt-BR", {
   maximumFractionDigits: 1,
 });
 
+const BRL0 = new Intl.NumberFormat("pt-BR", {
+  style: "currency",
+  currency: "BRL",
+  maximumFractionDigits: 0,
+});
+
+const DEC1 = new Intl.NumberFormat("pt-BR", {
+  minimumFractionDigits: 1,
+  maximumFractionDigits: 1,
+});
+
 export function formatBRL(v: number): string {
   return BRL.format(v);
+}
+
+/** Moeda sem centavos: 30000 → "R$ 30.000". */
+export function formatBRL0(v: number): string {
+  return BRL0.format(v);
+}
+
+/** Número com 1 casa decimal: 4.7 → "4,7". */
+export function formatDecimal1(v: number): string {
+  return DEC1.format(v);
 }
 
 export function formatInt(v: number): string {

@@ -15,8 +15,10 @@ interface MetricCardProps {
   badge?: string;
   /** Nota pequena sob o valor (ex.: base consumo). */
   note?: string;
-  drilldownHref: string;
+  drilldownHref?: string;
   drilldownLabel?: string;
+  /** Etiqueta cinza no rodapé para cards manuais (ex.: "manual · jun/26"). */
+  manualTag?: string;
 }
 
 export function MetricCard({
@@ -30,6 +32,7 @@ export function MetricCard({
   note,
   drilldownHref,
   drilldownLabel = "Ver detalhe",
+  manualTag,
 }: MetricCardProps) {
   return (
     <div className="flex flex-col rounded-xl bg-card p-5 ring-1 ring-white/5">
@@ -68,15 +71,21 @@ export function MetricCard({
         {!semDados && delta && <Delta pct={delta.pct} higherIsGood={delta.higherIsGood} />}
       </div>
 
-      <a
-        href={drilldownHref}
-        target="_blank"
-        rel="noopener noreferrer"
-        className="mt-4 inline-flex items-center gap-1 border-t border-white/5 pt-3 text-xs text-muted transition-colors hover:text-gold"
-      >
-        {drilldownLabel}
-        <span aria-hidden>↗</span>
-      </a>
+      {drilldownHref ? (
+        <a
+          href={drilldownHref}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="mt-4 inline-flex items-center gap-1 border-t border-white/5 pt-3 text-xs text-muted transition-colors hover:text-gold"
+        >
+          {drilldownLabel}
+          <span aria-hidden>↗</span>
+        </a>
+      ) : manualTag ? (
+        <span className="mt-4 inline-flex items-center gap-1 border-t border-white/5 pt-3 text-xs text-muted">
+          {manualTag}
+        </span>
+      ) : null}
     </div>
   );
 }

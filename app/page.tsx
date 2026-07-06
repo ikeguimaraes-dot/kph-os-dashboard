@@ -10,11 +10,14 @@ import {
 import {
   currentMonth,
   formatBRL,
+  formatBRL0,
+  formatDecimal1,
   formatInt,
   formatPctFraction,
   formatWeekdayMonth,
   monthOptions,
 } from "@/lib/format";
+import { INDICADORES_MANUAIS } from "@/lib/indicadores-manuais";
 import { MetricCard } from "@/components/MetricCard";
 import { AlertBanner } from "@/components/AlertBanner";
 import { CardSkeletonGrid } from "@/components/CardSkeleton";
@@ -224,6 +227,67 @@ export default function Home() {
                       semDados={data.maior_conta.sem_dados}
                       delta={{ pct: data.maior_conta.delta_pct, higherIsGood: false }}
                       drilldownHref={DRILLDOWN.gerencial}
+                    />
+                  </div>
+                </section>
+
+                {/* EQUIPE E MARKETING */}
+                <section className="space-y-4">
+                  <SectionTitle>Equipe e marketing</SectionTitle>
+                  <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
+                    {(() => {
+                      const ft = data.funcionario_top;
+                      const ftSemDados =
+                        !ft || ft.sem_dados || ft.funcionario == null;
+                      return (
+                        <MetricCard
+                          label="Funcionário que mais vendeu"
+                          value={ft?.funcionario ?? undefined}
+                          sub={
+                            ft?.valor_liquido != null
+                              ? formatBRL(ft.valor_liquido)
+                              : undefined
+                          }
+                          badge={ft?.periodo_label ?? undefined}
+                          semDados={ftSemDados}
+                          drilldownHref={DRILLDOWN.analiseVendas}
+                        />
+                      );
+                    })()}
+
+                    <MetricCard
+                      label="Nota nutricionista — média do mês"
+                      value={
+                        INDICADORES_MANUAIS.nota_nutricionista != null
+                          ? formatDecimal1(INDICADORES_MANUAIS.nota_nutricionista)
+                          : undefined
+                      }
+                      semDados={INDICADORES_MANUAIS.nota_nutricionista == null}
+                      manualTag={`manual · ${INDICADORES_MANUAIS.referencia}`}
+                    />
+
+                    <MetricCard
+                      label="Nota Google"
+                      value={`${formatDecimal1(INDICADORES_MANUAIS.nota_google)} ★`}
+                      manualTag={`manual · ${INDICADORES_MANUAIS.referencia}`}
+                    />
+
+                    <MetricCard
+                      label="Gasto Meta Ads no mês"
+                      value={formatBRL0(INDICADORES_MANUAIS.meta_ads_gasto)}
+                      manualTag={`manual · ${INDICADORES_MANUAIS.referencia}`}
+                    />
+
+                    <MetricCard
+                      label="Clicks em ads no mês"
+                      value={formatInt(INDICADORES_MANUAIS.ads_clicks)}
+                      manualTag={`manual · ${INDICADORES_MANUAIS.referencia}`}
+                    />
+
+                    <MetricCard
+                      label="Serena — clientes atendidos no mês"
+                      value={formatInt(INDICADORES_MANUAIS.serena_clientes)}
+                      manualTag={`manual · ${INDICADORES_MANUAIS.referencia}`}
                     />
                   </div>
                 </section>

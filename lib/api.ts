@@ -54,6 +54,17 @@ export interface MaiorConta extends Indicador {
   nome: string;
 }
 
+/**
+ * Funcionário que mais vendeu. Campo pode estar AUSENTE na resposta da API
+ * (ainda não shippado) — nesse caso tratamos como sem_dados: true.
+ */
+export interface FuncionarioTop {
+  funcionario: string | null;
+  valor_liquido: number | null;
+  periodo_label: string | null;
+  sem_dados: boolean;
+}
+
 export interface AlertaImportacao {
   datas_faltantes: string[]; // ["YYYY-MM-DD", ...]
   total: number;
@@ -78,6 +89,8 @@ export interface DashboardData {
   cmv_mes: Cmv;
   despesa_total_mes: Indicador;
   maior_conta: MaiorConta;
+  /** Novo campo — pode estar ausente enquanto a API não shippa. Ver FuncionarioTop. */
+  funcionario_top?: FuncionarioTop;
   alerta_importacao: AlertaImportacao;
   alerta_contas_faltantes: AlertaContasFaltantes;
 }
