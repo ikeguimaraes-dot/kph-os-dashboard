@@ -5,6 +5,7 @@
 
 import {
   ChartNoAxesColumn,
+  ClipboardList,
   Landmark,
   LayoutDashboard,
   ShoppingCart,
@@ -26,6 +27,11 @@ const LINKS = [
     label: "Análise de vendas",
     href: `${API_BASE}/financeiro/dre/receita/analise-vendas`,
     Icon: ChartNoAxesColumn,
+  },
+  {
+    label: "Ficha Técnica",
+    href: "https://kph-os-compras.vercel.app/cardapio",
+    Icon: ClipboardList,
   },
 ] as const;
 
