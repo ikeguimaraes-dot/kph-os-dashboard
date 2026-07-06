@@ -38,7 +38,7 @@ export function MetricCard({
   chart,
 }: MetricCardProps) {
   return (
-    <div className="flex flex-col rounded-xl bg-card p-5 ring-1 ring-white/5">
+    <div className="flex h-full flex-col rounded-xl bg-card p-5 ring-1 ring-white/5 transition-all duration-200 hover:-translate-y-0.5 hover:ring-edge motion-reduce:transition-none motion-reduce:hover:translate-y-0">
       <div className="flex items-start justify-between gap-2">
         <span className="text-xs uppercase tracking-wide text-muted">{label}</span>
         {badge && (

@@ -85,6 +85,40 @@ export function formatWeekdayMonth(iso: string): string {
   return `${weekdayShort(d)}, ${dd}/${monthShort(d)}`;
 }
 
+/** "hoje, 13h" ou "06/07, 13h" a partir do gerado_em da API. */
+export function formatAtualizadoEm(iso: string): string {
+  const d = new Date(iso);
+  const now = new Date();
+  const mesmoDia =
+    d.getFullYear() === now.getFullYear() &&
+    d.getMonth() === now.getMonth() &&
+    d.getDate() === now.getDate();
+  const hora = `${d.getHours()}h`;
+  if (mesmoDia) return `hoje, ${hora}`;
+  const dd = String(d.getDate()).padStart(2, "0");
+  const mm = String(d.getMonth() + 1).padStart(2, "0");
+  return `${dd}/${mm}, ${hora}`;
+}
+
+/**
+ * Último dia útil (seg–sex) do mês selecionado, limitado a ontem quando
+ * o mês é o corrente. null quando não há dia útil elegível (ex.: mês futuro).
+ */
+export function ultimoDiaUtil(mes: string): string | null {
+  const [y, m] = mes.split("-").map(Number);
+  const hoje = new Date();
+  const ontem = new Date(hoje.getFullYear(), hoje.getMonth(), hoje.getDate() - 1);
+  const fimDoMes = new Date(y, m, 0); // último dia do mês selecionado
+  let d = fimDoMes > ontem ? ontem : fimDoMes;
+  // recua até um dia útil dentro do mês selecionado
+  while (d.getDay() === 0 || d.getDay() === 6) {
+    d = new Date(d.getFullYear(), d.getMonth(), d.getDate() - 1);
+  }
+  if (d.getFullYear() !== y || d.getMonth() !== m - 1) return null;
+  const dd = String(d.getDate()).padStart(2, "0");
+  return `${y}-${String(m).padStart(2, "0")}-${dd}`;
+}
+
 /** "YYYY-MM" atual (mês corrente, local). */
 export function currentMonth(): string {
   const now = new Date();
