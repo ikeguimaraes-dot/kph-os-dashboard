@@ -36,6 +36,20 @@ export interface TicketMedio extends Indicador {
   divergente: boolean;
 }
 
+export interface SerieDiariaPonto {
+  data: string; // "YYYY-MM-DD"
+  valor: number;
+}
+
+/**
+ * Gorjeta do mês. Campo pode estar AUSENTE na resposta (ainda não shippado
+ * em todos ambientes) — nesse caso tratamos como sem_dados: true.
+ */
+export interface GorjetaMes extends Indicador {
+  pct_sobre_faturamento: number; // fração: 0.1099 = 10,99%
+  serie_diaria: SerieDiariaPonto[];
+}
+
 export interface Cmv extends Indicador {
   cmv_pct: number; // fração: 0.3142 = 31,42%
   cmv_pct_mes_anterior: number;
@@ -85,6 +99,8 @@ export interface DashboardData {
   melhor_dia: MelhorDia;
   ticket_medio_mes: TicketMedio;
   clientes_mes: Indicador;
+  /** Novo campo — pode estar ausente. Ver GorjetaMes. */
+  gorjeta_mes?: GorjetaMes;
   produto_mais_vendido: ProdutoMaisVendido;
   cmv_mes: Cmv;
   despesa_total_mes: Indicador;

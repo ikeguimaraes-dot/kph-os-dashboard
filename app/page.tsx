@@ -21,6 +21,7 @@ import { INDICADORES_MANUAIS } from "@/lib/indicadores-manuais";
 import { MetricCard } from "@/components/MetricCard";
 import { AlertBanner } from "@/components/AlertBanner";
 import { CardSkeletonGrid } from "@/components/CardSkeleton";
+import { Sparkline } from "@/components/Sparkline";
 
 const MESES = monthOptions(18);
 
@@ -181,6 +182,33 @@ export default function Home() {
                       delta={{ pct: data.clientes_mes.delta_pct, higherIsGood: true }}
                       drilldownHref={DRILLDOWN.receita}
                     />
+                    {(() => {
+                      const g = data.gorjeta_mes;
+                      const gSemDados = !g || g.sem_dados;
+                      return (
+                        <MetricCard
+                          label="Gorjeta do mês"
+                          value={g ? formatBRL(g.valor) : undefined}
+                          sub={
+                            g
+                              ? `${formatPctFraction(g.pct_sobre_faturamento)} do faturamento`
+                              : undefined
+                          }
+                          semDados={gSemDados}
+                          delta={
+                            g ? { pct: g.delta_pct, higherIsGood: true } : undefined
+                          }
+                          chart={
+                            g && g.serie_diaria?.length ? (
+                              <Sparkline
+                                values={g.serie_diaria.map((p) => p.valor)}
+                              />
+                            ) : undefined
+                          }
+                          drilldownHref={DRILLDOWN.receita}
+                        />
+                      );
+                    })()}
                   </div>
                 </section>
 

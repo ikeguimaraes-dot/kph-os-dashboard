@@ -19,6 +19,8 @@ interface MetricCardProps {
   drilldownLabel?: string;
   /** Etiqueta cinza no rodapé para cards manuais (ex.: "manual · jun/26"). */
   manualTag?: string;
+  /** Elemento discreto no rodapé (ex.: sparkline). Oculto quando semDados. */
+  chart?: ReactNode;
 }
 
 export function MetricCard({
@@ -33,6 +35,7 @@ export function MetricCard({
   drilldownHref,
   drilldownLabel = "Ver detalhe",
   manualTag,
+  chart,
 }: MetricCardProps) {
   return (
     <div className="flex flex-col rounded-xl bg-card p-5 ring-1 ring-white/5">
@@ -70,6 +73,8 @@ export function MetricCard({
       <div className="mt-4 min-h-5">
         {!semDados && delta && <Delta pct={delta.pct} higherIsGood={delta.higherIsGood} />}
       </div>
+
+      {!semDados && chart && <div className="mt-3">{chart}</div>}
 
       {drilldownHref ? (
         <a
