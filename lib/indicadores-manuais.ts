@@ -14,7 +14,7 @@ export interface IndicadoresManuais {
 
 export const INDICADORES_MANUAIS: IndicadoresManuais = {
   referencia: "jun/26",
-  nota_nutricionista: null,
+  nota_nutricionista: 2.2,
   nota_google: 4.8,
   meta_ads_gasto: 30000,
   ads_clicks: 150,
