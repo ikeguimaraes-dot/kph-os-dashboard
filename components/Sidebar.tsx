@@ -6,6 +6,7 @@
 import {
   ChartNoAxesColumn,
   ClipboardList,
+  HeartPulse,
   Landmark,
   LayoutDashboard,
   ShoppingCart,
@@ -38,6 +39,11 @@ const LINKS = [
     label: "Inteligência",
     href: "https://kph-os-inteligencia.vercel.app/inteligencia/inbox",
     Icon: Sparkles,
+  },
+  {
+    label: "Serena",
+    href: "https://madonna-painel.vercel.app/",
+    Icon: HeartPulse,
   },
 ] as const;
 
