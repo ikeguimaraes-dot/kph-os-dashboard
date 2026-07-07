@@ -9,6 +9,7 @@ import {
   Landmark,
   LayoutDashboard,
   ShoppingCart,
+  Sparkles,
 } from "lucide-react";
 import { API_BASE, DRILLDOWN } from "@/lib/api";
 
@@ -32,6 +33,11 @@ const LINKS = [
     label: "Ficha Técnica",
     href: "https://kph-os-compras.vercel.app/cardapio",
     Icon: ClipboardList,
+  },
+  {
+    label: "Inteligência",
+    href: "https://kph-os-inteligencia.vercel.app/inteligencia/inbox",
+    Icon: Sparkles,
   },
 ] as const;
 
