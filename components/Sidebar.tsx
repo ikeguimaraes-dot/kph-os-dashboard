@@ -22,7 +22,7 @@ const LINKS = [
   },
   {
     label: "Compras",
-    href: "https://kph-os-compras.vercel.app/cardapio",
+    href: "https://compras-orkestri.netlify.app/",
     Icon: ShoppingCart,
   },
   {
